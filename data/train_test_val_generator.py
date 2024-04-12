@@ -19,9 +19,9 @@ def main():
     X_val = pd.DataFrame(X_val, columns=X_val.columns)
     X_val["median_house_value"] = y_val
 
-    X_train.to_csv("train.csv")
-    X_test.to_csv("test.csv")
-    X_val.to_csv("validation.csv")
+    X_train.to_csv("train.csv", index=False)
+    X_test.to_csv("test.csv", index=False)
+    X_val.to_csv("validation.csv", index=False)
 
 if __name__ == "__main__":
     main()
