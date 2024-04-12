@@ -2,3 +2,4 @@
 .julia
 conda
 *.csv
+.julia
