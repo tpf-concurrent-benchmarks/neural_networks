@@ -42,4 +42,7 @@ logs:
 # - sklearn
 datasets:
 	docker exec nn_python_julia bash -c "cd notebooks/data && unzip -n archive.zip && python3 train_test_val_generator.py"
-	
+
+#returns the link of the server
+get_link:
+	docker exec -it nn_python_julia jupyter server list
