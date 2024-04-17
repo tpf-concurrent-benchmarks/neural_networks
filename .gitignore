@@ -3,3 +3,7 @@
 conda
 *.csv
 .julia
+
+# IDEs
+.idea
+.vscode
