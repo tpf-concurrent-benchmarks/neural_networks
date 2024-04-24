@@ -4,7 +4,7 @@
 # In[12]:
 
 
-get_ipython().system('pip3 install torch torchvision torchaudio')
+get_ipython().system('pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118')
 
 
 # In[13]:
