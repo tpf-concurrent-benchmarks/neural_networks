@@ -6,10 +6,25 @@ run: remove build _copy_directories
 	-v "$$(pwd)/python/conda:/opt/conda:rw" \
 	-v "$$(pwd)/julia/.julia:/home/jovyan/.julia:rw" \
 	-p 8888:8888 \
+	--gpus all \
 	--name nn_python_julia \
 	--user root nn_jupyter
 
+deploy: remove_stack
+	until \
+	docker stack deploy \
+	-c docker/docker-compose.yaml \
+	nn_jupyter_metrics; \
+	do sleep 1; \
+	done
+
+remove_stack:
+	if docker stack ls | grep -q nn_jupyter_metrics; then \
+		docker stack rm nn_jupyter_metrics; \
+	fi
+
 _copy_directories:
+	mkdir -p graphite
 	mkdir -p python/conda
 	mkdir -p julia/.julia
 	docker container stop nn_python_julia || true
@@ -28,6 +43,9 @@ _copy_directories:
 
 build:
 	docker build -f Dockerfile -t nn_jupyter .
+
+build_julia:
+	docker build -f Dockerfile-julia -t nn_jupyter .
 
 remove:
 	docker container stop nn_python_julia || true

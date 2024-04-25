@@ -3,6 +3,7 @@
 conda
 *.csv
 .julia
+graphite
 
 # IDEs
 .idea
