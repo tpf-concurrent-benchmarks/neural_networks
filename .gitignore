@@ -1,8 +1,9 @@
 .ipynb_checkpoints
 .julia
-conda
+dist-packages
 *.csv
 .julia
+graphite
 
 # IDEs
 .idea

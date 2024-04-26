@@ -1,2 +1,5 @@
 python/conda/
 julia/.julia
+graphite
+julia/.julia
+python/dist-packages
