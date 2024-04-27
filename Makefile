@@ -10,6 +10,14 @@ run: remove build _copy_directories
 	--name nn_python_julia \
 	--user root nn_jupyter
 
+run_tensorflow:
+	jupyter nbconvert --to script notebooks/python/training_tensorflow.ipynb
+	ipython3 notebooks/python/training_tensorflow.py
+
+run_pytorch:
+	jupyter nbconvert --to script notebooks/python/training_pytorch.ipynb
+	ipython3 notebooks/python/training_pytorch.py
+
 deploy: remove_stack
 	until \
 	docker stack deploy \
