@@ -8,6 +8,17 @@
 make run
 ````
 
+### Running Jupyter notebooks as a script
+
+Make sure you have already done a `make run` and you are inside the container before running the following commands.
+
+1. jupyter nbconvert --to script notebooks/python/training_tensorflow.ipynb
+2. ipython3 notebooks/python/training_tensorflow.py
+
+The same applies to the PyTorch notebook. 
+
+````
+
 ### Start metrics services
 
 ```
