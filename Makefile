@@ -11,10 +11,12 @@ run: remove build _copy_directories
 	--user root nn_jupyter
 
 run_tensorflow:
+	docker exec -it $$(make run | tail -1) bash
 	jupyter nbconvert --to script notebooks/python/training_tensorflow.ipynb
 	ipython3 notebooks/python/training_tensorflow.py
 
 run_pytorch:
+	docker exec -it $$(make run | tail -1) bash
 	jupyter nbconvert --to script notebooks/python/training_pytorch.ipynb
 	ipython3 notebooks/python/training_pytorch.py
 
