@@ -14,14 +14,17 @@ def main():
     X_train["median_house_value"] = y_train
     
     X_test = pd.DataFrame(X_test, columns=X_test.columns)
-    X_test["median_house_value"] = y_val
+    X_test["median_house_value"] = y_test
     
     X_val = pd.DataFrame(X_val, columns=X_val.columns)
     X_val["median_house_value"] = y_val
 
-    X_train.to_csv("train.csv", index=False)
-    X_test.to_csv("test.csv", index=False)
-    X_val.to_csv("validation.csv", index=False)
+    print(X_train.shape)
+    print(X_test.shape)
+    print(X_val.shape)
+    # X_train.to_csv("train.csv", index=False)
+    # X_test.to_csv("test.csv", index=False)
+    # X_val.to_csv("validation.csv", index=False)
 
 if __name__ == "__main__":
     main()

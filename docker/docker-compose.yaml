@@ -73,3 +73,7 @@ services:
 volumes:
   grafana_config:
     external: true
+
+networks:
+  default:
+    attachable: true

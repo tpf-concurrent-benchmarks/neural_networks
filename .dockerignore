@@ -3,3 +3,4 @@ julia/.julia
 graphite
 julia/.julia
 python/dist-packages
+dist-packages.old

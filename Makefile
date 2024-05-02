@@ -1,4 +1,4 @@
-run: remove build _copy_directories
+run: deploy remove build _copy_directories
 	docker run -d \
 	-v "$$(pwd)/python/notebooks:/tf/notebooks/python:rw" \
 	-v "$$(pwd)/julia/notebooks:/tf/notebooks/julia:rw" \
@@ -6,13 +6,15 @@ run: remove build _copy_directories
 	-v "$$(pwd)/python/dist-packages:/usr/local/lib/python3.11/dist-packages:rw" \
 	-v "$$(pwd)/julia/.julia:/root/.julia:rw" \
 	-p 8888:8888 \
+	--network=nn_jupyter_metrics_default \
 	--gpus all \
 	--name nn_python_julia \
 	--user root nn_jupyter
+	docker exec nn_python_julia bash -c "./send_gpu_metrics.sh" &
 
 run_tensorflow:
 	jupyter nbconvert --to script notebooks/python/training_tensorflow.ipynb
-	ipython3 notebooks/python/training_tensorflow.py
+	ipython3 notebooks/pythmn/training_tensorflow.py
 
 run_pytorch:
 	jupyter nbconvert --to script notebooks/python/training_pytorch.ipynb
@@ -26,7 +28,7 @@ deploy: remove_stack
 	do sleep 1; \
 	done
 
-remove_stack:
+remove_stack: remove
 	if docker stack ls | grep -q nn_jupyter_metrics; then \
 		docker stack rm nn_jupyter_metrics; \
 	fi
