@@ -12,14 +12,6 @@ run: deploy remove build _copy_directories
 	--user root nn_jupyter
 	docker exec nn_python_julia bash -c "./send_gpu_metrics.sh" &
 
-run_tensorflow:
-	jupyter nbconvert --to script notebooks/python/training_tensorflow.ipynb
-	ipython3 notebooks/pythmn/training_tensorflow.py
-
-run_pytorch:
-	jupyter nbconvert --to script notebooks/python/training_pytorch.ipynb
-	ipython3 notebooks/python/training_pytorch.py
-
 deploy: remove_stack
 	until \
 	docker stack deploy \
