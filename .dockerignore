@@ -1,6 +1,3 @@
-python/conda/
-julia/.julia
 graphite
-julia/.julia
-python/dist-packages
-dist-packages.old
+python/notebooks
+julia/notebooks
