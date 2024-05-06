@@ -22,8 +22,7 @@ The objective of this project is to benchmark both languages on a common task, a
 
 #### Startup
 
-- `make build` will build the docker images for the Python neural network.
-- `make build_julia` will build the docker images for the Julia neural network.
+- `make build` will build the docker image used in both languages.
 
 #### Run
 

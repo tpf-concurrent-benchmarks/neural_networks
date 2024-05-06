@@ -1,4 +1,4 @@
-run: deploy remove build
+run: deploy build
 	docker run -d \
 	-v "$$(pwd)/python/notebooks:/tf/notebooks/python:rw" \
 	-v "$$(pwd)/julia/notebooks:/tf/notebooks/julia:rw" \
@@ -10,7 +10,7 @@ run: deploy remove build
 	--user root nn_jupyter
 	docker exec nn_python_julia bash -c "./send_gpu_metrics.sh" &
 
-deploy: remove_stack
+deploy: remove
 	until \
 	docker stack deploy \
 	-c docker/docker-compose.yaml \
@@ -18,20 +18,15 @@ deploy: remove_stack
 	do sleep 1; \
 	done
 
-remove_stack: remove
-	if docker stack ls | grep -q nn_jupyter_metrics; then \
-		docker stack rm nn_jupyter_metrics; \
-	fi
-
 build:
 	docker build -f Dockerfile -t nn_jupyter .
-
-build_julia:
-	docker build -f Dockerfile-julia -t nn_jupyter .
 
 remove:
 	docker container stop nn_python_julia || true
 	docker container rm nn_python_julia || true
+	if docker stack ls | grep -q nn_jupyter_metrics; then \
+		docker stack rm nn_jupyter_metrics; \
+	fi
 
 logs:
 	docker container logs nn_python_julia
