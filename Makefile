@@ -1,10 +1,8 @@
-run: deploy remove build _copy_directories
+run: deploy remove build
 	docker run -d \
 	-v "$$(pwd)/python/notebooks:/tf/notebooks/python:rw" \
 	-v "$$(pwd)/julia/notebooks:/tf/notebooks/julia:rw" \
 	-v "$$(pwd)/data:/tf/notebooks/data:rw" \
-	-v "$$(pwd)/python/dist-packages:/usr/local/lib/python3.11/dist-packages:rw" \
-	-v "$$(pwd)/julia/.julia:/root/.julia:rw" \
 	-p 8888:8888 \
 	--network=nn_jupyter_metrics_default \
 	--gpus all \
@@ -32,24 +30,6 @@ remove_stack: remove
 	if docker stack ls | grep -q nn_jupyter_metrics; then \
 		docker stack rm nn_jupyter_metrics; \
 	fi
-
-_copy_directories:
-	mkdir -p graphite
-	mkdir -p python/dist-packages
-	mkdir -p julia/.julia
-	docker container stop nn_python_julia || true
-	docker container rm nn_python_julia || true
-
-	@if [ $$(find python/dist-packages -mindepth 1 | wc -l) -eq 0 ] || [ $$(find julia/.julia -mindepth 1 | wc -l) -eq 0 ]; then \
-		docker run -d \
-		-v "$$(pwd)/notebooks:/notebooks:rw" \
-		--user root --name nn_python_julia nn_jupyter bash; \
-		docker cp nn_python_julia:/usr/local/lib/python3.11/dist-packages python; \
-		docker cp nn_python_julia:/root/.julia julia; \
-		docker container stop nn_python_julia; \
-		docker container rm nn_python_julia; \
-	fi
-
 
 build:
 	docker build -f Dockerfile -t nn_jupyter .
